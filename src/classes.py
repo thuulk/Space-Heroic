@@ -396,10 +396,18 @@ class Game(Menu):
 # Get the absolute path to the directory containing this script
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-game = Game(True, pygame.font.Font(os.path.join(base_dir, '../fonts/PressStart2P-Regular.ttf'), 40), (255, 255, 255),
+game = Game(True, 
+            pygame.font.Font(os.path.join(base_dir, '../fonts/PressStart2P-Regular.ttf'), 40),
+            (255, 255, 255),
             (87, 35, 100))
 
-player = Player(1, 368, 518, 0, 0, pygame.image.load(os.path.join(base_dir, '../images/sprites_player0.png')))
+player = Player(1,
+                368, 
+                518, 
+                0, 
+                0, 
+                pygame.image.load(os.path.join(base_dir, '../images/sprites_player0.png')))
+
 enemies = Enemy(7,
                 [random.randint(0, 736) for enemy in range(7)],
                 [random.randint(0, 200) for enemy in range(7)],
@@ -412,13 +420,18 @@ meteor = Meteor(1,
                 pygame.image.load(os.path.join(base_dir,'../images/asteroide_128_X_128.png')), False)
 
 meteors = Meteor(2,
-                 [random.randint(0, 736) for asteroid in range(2)],
-                 [random.randint(-256, -128) for asteroid in range(2)],
-                 0, 0.2, False,
-                 pygame.image.load(os.path.join(base_dir,'../images/asteroide_128_X_128.png')), False)
+                [random.randint(0, 736) for asteroid in range(2)],
+                [random.randint(-256, -128) for asteroid in range(2)],
+                0,
+                0.2, False,
+                pygame.image.load(os.path.join(base_dir,'../images/asteroide_128_X_128.png')), False)
 
 bullet = Bullet(1,
-                0, 518, 0,
-                0, False, pygame.image.load(os.path.join(base_dir,'../images/laser_player.png')))
+                0, 
+                518, 
+                0,
+                0, 
+                False, 
+                pygame.image.load(os.path.join(base_dir,'../images/laser_player.png')))
 
 timer = Timer()
