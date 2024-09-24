@@ -1,10 +1,11 @@
 # Module created to define and store functions of Space_Heroic source code
 import random
 
-from classes import game, bullet, enemies, player, timer, meteors, meteor
+from classes import game, bullet, enemies, player, timer, meteors, meteor, base_dir
 from pygame import mixer
 import pygame
 import math
+import os
 
 
 # Function that initialize everything required for the game to run.
@@ -19,7 +20,7 @@ def initialize():
 
     # Initialize music
     pygame.mixer.init()
-    mixer.music.load('../sounds/corneria.mp3')
+    mixer.music.load(os.path.join(base_dir,'../sounds/corneria.mp3'))
     mixer.music.set_volume(1)
     mixer.music.play(-1)
 

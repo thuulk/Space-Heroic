@@ -5,6 +5,7 @@ from pathlib import Path
 import pygame
 import random
 import json
+import os
 
 
 pygame.mixer.init()
@@ -161,14 +162,14 @@ class Menu:
         self.screen = pygame.display.set_mode((800, 600))
 
         # Screen background.
-        self.background = pygame.image.load('../images/fondo.png')
+        self.background = pygame.image.load(os.path.join(base_dir,'../images/fondo.png'))
 
         # Bool that will determine if the menu will keep running
         self.execute = execute
 
         # Font
         self.title_font = title_font
-        self.option_font = pygame.font.Font('../fonts/PressStart2P-Regular.ttf', 35)
+        self.option_font = pygame.font.Font(os.path.join(base_dir, '../fonts/PressStart2P-Regular.ttf'), 35)
 
         # Font color
         self.default_color = color
@@ -194,8 +195,8 @@ class Player(MovableObject):
         super().__init__(quantity, initial_position_x, initial_position_y, position_x_change, position_y_change, image)
 
         # Initializing the exclusive attributes of player class
-        self.frame02 = pygame.image.load('../images/sprites_player1.png')
-        self.death_sound = mixer.Sound('../sounds/death_sound_effect.mp3')
+        self.frame02 = pygame.image.load(os.path.join(base_dir,'../images/sprites_player1.png'))
+        self.death_sound = mixer.Sound(os.path.join(base_dir,'../sounds/death_sound_effect.mp3'))
         self.death_sound.set_volume(0.7)
 
     def stand_by(self, iteration):
@@ -263,7 +264,7 @@ class Bullet(MovableObject):
         self.visible = []
 
         # Attribute that stores shooting sound.
-        self.sound = mixer.Sound('../sounds/blaster.mp3')
+        self.sound = mixer.Sound(os.path.join(base_dir,'../sounds/blaster.mp3'))
 
         for iteration in range(self.quantity):
 
@@ -325,32 +326,32 @@ class Game(Menu):
         super().__init__(execute, font,  color, option_color)
 
         # Game icon.
-        self.icon = pygame.image.load('../images/missile.png')
+        self.icon = pygame.image.load(os.path.join(base_dir,'../images/missile.png'))
 
         # Attribute that will determine if what section of the game will run.
         self.over = False
         self.reset = True
 
         # Destruction sound of enemy ships.
-        self.destruction_sound = mixer.Sound('../sounds/destruccion.mp3.mp3')
+        self.destruction_sound = mixer.Sound(os.path.join(base_dir,'../sounds/destruccion.mp3.mp3'))
         self.destruction_sound.set_volume(0.8)
 
         # Storing the size and font of different texts displayed.
-        self.score_font = pygame.font.Font('../fonts/PressStart2P-Regular.ttf', 20)
+        self.score_font = pygame.font.Font(os.path.join(base_dir,'../fonts/PressStart2P-Regular.ttf'), 20)
 
         # Destruction sprite.
         self.destruction_sprite = DestructionSprites(1, 0, 514, 0,
                                                      0, False,
-                                                     pygame.image.load('../images/destruction_sprites01.png'),
-                                                     pygame.image.load('../images/destruction_sprites02.png'),
-                                                     pygame.image.load('../images/destruction_sprites03.png'),
-                                                     pygame.image.load('../images/destruction_sprites04.png'))
+                                                     pygame.image.load(os.path.join(base_dir,'../images/destruction_sprites01.png')),
+                                                     pygame.image.load(os.path.join(base_dir,'../images/destruction_sprites02.png')),
+                                                     pygame.image.load(os.path.join(base_dir,'../images/destruction_sprites03.png')),
+                                                     pygame.image.load(os.path.join(base_dir,'../images/destruction_sprites04.png')))
 
-        self.menu = Menu(True, pygame.font.Font('../fonts/PressStart2P-Regular.ttf', 50),
+        self.menu = Menu(True, pygame.font.Font(os.path.join(base_dir,'../fonts/PressStart2P-Regular.ttf'), 50),
                          (255, 255, 255), (87, 35, 100))
 
         # Score attributes.
-        self.score_path = Path('../json/best_score.json')
+        self.score_path = Path(os.path.join(base_dir,'../json/best_score.json'))
         self.best_score = 0
         self.score = 0
 
@@ -392,29 +393,32 @@ class Game(Menu):
         super().display_text(font, message, position_x, position_y, color)
 
 
-game = Game(True, pygame.font.Font('../fonts/PressStart2P-Regular.ttf', 40), (255, 255, 255),
+# Get the absolute path to the directory containing this script
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+game = Game(True, pygame.font.Font(os.path.join(base_dir, '../fonts/PressStart2P-Regular.ttf'), 40), (255, 255, 255),
             (87, 35, 100))
 
-player = Player(1, 368, 518, 0, 0, pygame.image.load('../images/sprites_player0.png'))
+player = Player(1, 368, 518, 0, 0, pygame.image.load(os.path.join(base_dir, '../images/sprites_player0.png')))
 enemies = Enemy(7,
                 [random.randint(0, 736) for enemy in range(7)],
                 [random.randint(0, 200) for enemy in range(7)],
-                0.9, 0.1, pygame.image.load('../images/space-ship.png'))
+                0.9, 0.14, pygame.image.load(os.path.join(base_dir,'../images/space-ship.png')))
 
 meteor = Meteor(1,
                 [random.randint(0, 736) for asteroid in range(2)],
                 [random.randint(-256, -128) for asteroid in range(2)],
                 0, 0.2, False,
-                pygame.image.load('../images/asteroide_128_X_128.png'), False)
+                pygame.image.load(os.path.join(base_dir,'../images/asteroide_128_X_128.png')), False)
 
 meteors = Meteor(2,
                  [random.randint(0, 736) for asteroid in range(2)],
                  [random.randint(-256, -128) for asteroid in range(2)],
                  0, 0.2, False,
-                 pygame.image.load('../images/asteroide_128_X_128.png'), False)
+                 pygame.image.load(os.path.join(base_dir,'../images/asteroide_128_X_128.png')), False)
 
 bullet = Bullet(1,
                 0, 518, 0,
-                0, False, pygame.image.load('../images/laser_player.png'))
+                0, False, pygame.image.load(os.path.join(base_dir,'../images/laser_player.png')))
 
 timer = Timer()
